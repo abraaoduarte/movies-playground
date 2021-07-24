@@ -8,4 +8,3 @@ function listen(handler: Express, { port = 3001 } = {}): Promise<void> {
 }
 
 export default listen;
-

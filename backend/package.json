@@ -7,7 +7,9 @@
     "start:dev": "nodemon",
     "build": "tsc --project './tsconfig.json'",
     "typecheck": "tsc --project tsconfig.json --noEmit",
-    "start": "node ./dist/app.js"
+    "start": "node ./dist/app.js",
+    "lint": "eslint source",
+    "lint:fix": "eslint --fix source"
   },
   "dependencies": {
     "@types/node": "^16.4.2",
@@ -17,7 +19,15 @@
   },
   "devDependencies": {
     "@types/express": "^4.17.13",
+    "@typescript-eslint/eslint-plugin": "^4.28.4",
+    "@typescript-eslint/parser": "^4.28.4",
+    "eslint": "^7.31.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-prettier": "^3.4.0",
     "nodemon": "^2.0.12",
+    "prettier": "^2.3.2",
     "ts-node": "^10.1.0",
     "ts-node-dev": "^1.1.8",
     "tsconfig-paths": "^3.10.1"
