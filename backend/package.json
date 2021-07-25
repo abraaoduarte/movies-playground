@@ -5,6 +5,7 @@
   "license": "MIT",
   "scripts": {
     "start:dev": "nodemon",
+    "start:prod": "node dist/index.js",
     "build": "tsc --project './tsconfig.json'",
     "typecheck": "tsc --project tsconfig.json --noEmit",
     "start": "node ./dist/app.js",

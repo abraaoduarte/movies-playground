@@ -1,6 +1,6 @@
-import server from 'infra/server';
-import listen from 'infra/listen';
-import logger from 'utils/logger';
+import server from './infra/server';
+import listen from './infra/listen';
+import logger from './utils/logger';
 
 listen(server)
 	.then(async () => {
