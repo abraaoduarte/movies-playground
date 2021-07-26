@@ -1,6 +1,6 @@
 import { CustomRequest } from '../../types/CustomRequest';
 import omdbapi from '../../app/service/omdbapi-client';
-import { MovieBookmarked } from './movie.schem';
+import { MovieBookmarked } from './movie.schema';
 import { BadRequest } from '../../app/error';
 
 export const search = async (query) => {
