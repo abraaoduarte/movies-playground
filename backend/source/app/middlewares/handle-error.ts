@@ -7,11 +7,11 @@ type CodeMessage = {
 };
 
 const unauthorizedCodes: CodeMessage = {
-	credentials_bad_scheme: 'O formato do header deve ser: Authorization: Bearer [token]',
-	credentials_bad_format: 'O formato do header deve ser: Authorization: Bearer [token]',
-	credentials_required: 'Token necessário para acessar esta url',
-	invalid_token: 'Token inválido',
-	revoked_token: 'O token enviado foi revogado',
+	credentials_bad_scheme: 'The format of the header must be: Authorization: Bearer [token]',
+	credentials_bad_format: 'The format of the header must be: Authorization: Bearer [token]',
+	credentials_required: 'Token required to access this url',
+	invalid_token: 'Invalid Token',
+	revoked_token: 'The sent token has been revoked',
 };
 
 const handleError = () => (error, request: Request, response: Response, _: NextFunction) => {

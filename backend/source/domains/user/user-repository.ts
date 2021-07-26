@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt';
 import { User, IUser } from './user.schema';
 import { BadRequest } from '../../app/error';
 
-const isEmailBeingUsed = async (email: string): Promise<IUser> => {
+export const findByEmail = async (email: string): Promise<IUser> => {
 	const user = await User.findOne({ email });
 
 	return user;
@@ -22,6 +22,12 @@ const validationEmail = (email: string): boolean => {
 	return regex.test(email);
 };
 
+export const findUserByUuid = async (uuid: string) => {
+	const user = await User.findOne({ _id: uuid });
+
+	return user;
+};
+
 export const register = async (body: IUser): Promise<IUser | null> => {
 	if (!body) {
 		throw new BadRequest('Email, name and password is required');
@@ -35,7 +41,7 @@ export const register = async (body: IUser): Promise<IUser | null> => {
 		throw new BadRequest('Email is invalid');
 	}
 
-	const isEmailDuplicated = await isEmailBeingUsed(body.email);
+	const isEmailDuplicated = await findByEmail(body.email);
 
 	if (isEmailDuplicated) {
 		throw new BadRequest('This email is being used');
