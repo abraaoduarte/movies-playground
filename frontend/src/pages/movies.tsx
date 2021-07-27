@@ -1,3 +1,13 @@
-export default function Home() {
-    return (<h1>Initial</h1>)
+import MoviesTemplate from '../templates/Movies'
+import Head from 'next/head'
+
+export default function Movies() {
+    return (
+      <>
+        <Head>
+          <title>Movies</title>
+        </Head>
+        <MoviesTemplate />
+      </>
+    )
   }
