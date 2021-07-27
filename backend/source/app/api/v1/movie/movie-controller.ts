@@ -19,3 +19,12 @@ export const bookmarked = wrap((request: CustomRequest) =>
 		},
 	}))
 );
+
+export const list = wrap((request: CustomRequest) =>
+	movieRepository.list(request).then((movies) => ({
+		body: {
+			message: 'success',
+			result: movies,
+		},
+	}))
+);

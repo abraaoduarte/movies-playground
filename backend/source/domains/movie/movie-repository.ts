@@ -47,3 +47,9 @@ export const bookmarked = async (request: CustomRequest) => {
 
 	return movieBookmarked;
 };
+
+export const list = async (request: CustomRequest) => {
+	const movies = await MovieBookmarked.find({ userId: request.payload.data.user });
+
+	return movies;
+};
