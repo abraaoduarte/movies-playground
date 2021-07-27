@@ -91,7 +91,6 @@ const Login: React.FC = () => {
 								{...field}
                                 label="Password"
 								autoComplete="off"
-								maxLength={300}
 								type="password"
 								error={errors?.password?.message}
 								hasError={!!errors?.password?.message}
