@@ -31,25 +31,3 @@ export const FormContainer = styled.div`
         }
     }
 `
-
-export const Input = styled.input`
-    width: 100%;
-    margin: 8px 0;
-    padding: 8px;
-    color: #333;
-    border: 1px solid #CCC;
-    border-radius: 8px;
-`
-export const Button = styled.button`
-    padding: 8px;
-    width: 100%;
-    background-color: #56b084;
-    color: #fff;
-    outline: none;
-    border: none;
-    margin-bottom: 8px;
-    &:hover {
-        background-color: #529e79;
-        cursor: pointer;
-    }
-`
