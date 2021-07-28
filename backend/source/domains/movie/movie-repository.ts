@@ -33,7 +33,6 @@ export const bookmarked = async (request: CustomRequest) => {
 		throw new BadRequest('Movie not exists');
 	}
 
-	// If exist, delete
 	const bookmarkedExists = await getBookmarked(payload.userId, payload.movieId);
 	if (bookmarkedExists) {
 		// eslint-disable-next-line no-underscore-dangle
@@ -42,7 +41,6 @@ export const bookmarked = async (request: CustomRequest) => {
 		return bookmarkedExists;
 	}
 
-	// If not exist, delete
 	const movieBookmarked = await MovieBookmarked.create({ ...payload });
 
 	return movieBookmarked;
