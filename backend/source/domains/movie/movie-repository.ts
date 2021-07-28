@@ -4,7 +4,7 @@ import { MovieBookmarked } from './movie.schema';
 import { BadRequest } from '../../app/error';
 
 export const search = async (query) => {
-	const { data } = await omdbapi.get(`/?apikey=d9f4d88c&s=${query.title}`);
+	const { data } = await omdbapi.get(`/?apikey=d9f4d88c&s=${query.title}&page=${query.page || 1}`);
 	const movies = {
 		...data,
 	};
@@ -24,10 +24,10 @@ const getBookmarked = async (userId: string, movieId: string) => {
 export const bookmarked = async (request: CustomRequest) => {
 	const payload = {
 		userId: request.payload.data.user,
-		movieId: request.params.id,
+		movieId: request.body.movieId,
 	};
 
-	const { data } = await omdbapi.get(`/?apikey=d9f4d88c&i=${request.params.id}`);
+	const { data } = await omdbapi.get(`/?apikey=d9f4d88c&i=${request.body.movieId}`);
 
 	if (data.Response === 'False') {
 		throw new BadRequest('Movie not exists');

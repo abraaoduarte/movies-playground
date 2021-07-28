@@ -7,7 +7,7 @@ const router = Router();
 
 router.get('/search', auth(), controller.search);
 router.get('/bookmarkeds', auth(), controller.list);
-router.post('/bookmarked/:id', auth(), controller.bookmarked);
+router.post('/bookmarked', auth(), controller.bookmarked);
 base.use('/movies', router);
 
 export { base as router };
