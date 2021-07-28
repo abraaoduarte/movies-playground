@@ -33,7 +33,7 @@ export const ContainerCard = styled.div`
 	margin: 30px auto;
 	display: grid;
 	grid-gap: 10px;
-	grid-template-columns: repeat(4, 1fr);
+	grid-template-columns: repeat(5, 1fr);
 `;
 
 export const WrapperCard = styled.div`

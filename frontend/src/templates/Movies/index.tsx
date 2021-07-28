@@ -12,6 +12,7 @@ type Movie = {
 	imdbID: string;
 	Type: string;
 	Poster: string;
+	movieId?: string;
 };
 
 type PaginationProps = {
@@ -39,6 +40,16 @@ const Movies: React.FC = () => {
 			return;
 		}
 		setToken(getToken);
+
+		async function getBookmarked() {
+			const { data } = await client.get(`http://localhost:3001/api/v1/movies/bookmarkeds`, {
+				headers: {
+					Authorization: `Bearer ${getToken}`,
+				},
+			});
+			setBookmarked(data.result.map((movie: Movie) => movie.movieId));
+		}
+		getBookmarked();
 	});
 
 	const onSearch = async () => {
