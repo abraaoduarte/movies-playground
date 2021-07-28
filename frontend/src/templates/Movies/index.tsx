@@ -49,7 +49,11 @@ const Movies: React.FC = () => {
 			});
 			setBookmarked(data.result.map((movie: Movie) => movie.movieId));
 		}
-		getBookmarked();
+		getBookmarked().catch((error) => {
+			if (error.response.status === 401) {
+				router.push('/login');
+			}
+		});
 	});
 
 	const onSearch = async () => {
