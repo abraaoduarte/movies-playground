@@ -52,7 +52,7 @@
 
 ### Accessing
 - To access the backend go to url: http://localhost:3000
-- To access the frontend go to url http://localhost:3001
+- To access the frontend go to url http://localhost:3001/login
 
 ### Overview
 To access the main page you must have a user, for that click on the register link to create a new user
