@@ -1,0 +1,51 @@
+version: "3.8"
+
+services:
+    frontend:
+        image: movies-playground-frontend
+        build: ./frontend
+        command: yarn dev
+        ports:
+            - 3001:3001
+        depends_on:
+            - backend
+        volumes:
+            - ./frontend:/usr/src/app
+            - /usr/src/app/node_modules
+            - /usr/src/app/.next
+
+    backend:
+        image: movies-playground-backend
+        build: ./backend
+        command: yarn start:dev
+        ports:
+            - 3000:3000
+        depends_on:
+            - mongo
+        links:
+            - mongo
+        networks:
+            - app-network
+        volumes:
+            - ./backend:/usr/src/app
+            - /usr/src/app/node_modules
+
+    mongo:
+        container_name: mongodb
+        image: mongo:latest
+        restart: always
+        volumes:
+            - bd-volume:/data/db
+        environment:
+            - MONGO_INITDB_DATABASE=movies
+        ports:
+            - 27017:27017
+        networks:
+            - app-network
+
+volumes:
+    bd-volume:
+
+networks:
+    app-network:
+        driver: bridge
