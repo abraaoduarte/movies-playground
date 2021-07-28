@@ -1,11 +1,11 @@
-import * as S from './styles'
-import Link from 'next/link'
-import React, { useState } from 'react'
-import axios from 'axios'
-import CircularProgress from '@material-ui/core/CircularProgress';
-import { useRouter } from 'next/router'
-import { Input, Button } from 'components'
-import { useForm, Controller } from "react-hook-form";
+import Link from 'next/link';
+import React, { useState } from 'react';
+import { useRouter } from 'next/router';
+import { Input, Button, Loading } from 'components';
+import { useForm, Controller } from 'react-hook-form';
+import * as S from './styles';
+import BaseTemplate from '../Base';
+import client from '../../services/client-axios';
 
 type FormValues = {
 	email: string;
@@ -13,49 +13,54 @@ type FormValues = {
 };
 
 const Login: React.FC = () => {
-    const { watch,
+	const router = useRouter();
+	const {
 		control,
 		handleSubmit,
-		formState: { errors, isSubmitted },
-    } = useForm<FormValues>({
+		formState: { errors },
+	} = useForm<FormValues>({
 		defaultValues: {
 			email: '',
 			password: '',
 		},
 	});
-    const values = watch();
-    const router = useRouter()
 
-    const [loading, setLoading] = useState(false)
+	const [loading, setLoading] = useState(false);
 
-    const onSubmit = async (form: FormValues) => {
-        try {
-            setLoading(true)
+	const onSubmit = async (form: FormValues) => {
+		try {
+			setLoading(true);
 
-            const { data } = await axios.post('http://localhost:3001/api/v1/auth/login', {
-                email: form.email,
-                password: form.password,
-            })
+			const { data } = await client.post('/auth/login', {
+				email: form.email,
+				password: form.password,
+			});
 
-            localStorage.setItem('user', JSON.stringify(data.result.user));
-            localStorage.setItem('token', data.result.token);
-            router.push('/movies')
+			setTimeout(() => {
+				setLoading(false);
+				localStorage.setItem('user', JSON.stringify(data.result.user));
+				localStorage.setItem('token', data.result.token);
+				router.push('/');
+			}, 700);
+		} catch (error) {
+			setTimeout(() => setLoading(false), 1000);
+		}
+	};
 
-        } catch (error) {
-            setLoading(false)
-        }
-    }
+	if (loading) {
+		return (
+			<BaseTemplate title="Login">
+				<Loading />
+			</BaseTemplate>
+		);
+	}
 
-    if (loading) {
-        return <CircularProgress />
-    }
-    return (
-        <S.Container>
-            <S.FormContainer>
-                <h3>Welcome!</h3>
-                <h4>Movies repository</h4>
-                <form onSubmit={handleSubmit(onSubmit)}>
-                <Controller
+	return (
+		<BaseTemplate title="Login">
+			<S.FormContainer>
+				<h3>Login!</h3>
+				<form onSubmit={handleSubmit(onSubmit)}>
+					<Controller
 						control={control}
 						name="email"
 						rules={{
@@ -67,7 +72,7 @@ const Login: React.FC = () => {
 						render={({ field }) => (
 							<Input
 								{...field}
-                                label="E-mail"
+								label="E-mail"
 								autoComplete="off"
 								maxLength={300}
 								type="text"
@@ -77,7 +82,7 @@ const Login: React.FC = () => {
 						)}
 					/>
 
-                    <Controller
+					<Controller
 						control={control}
 						name="password"
 						rules={{
@@ -89,7 +94,7 @@ const Login: React.FC = () => {
 						render={({ field }) => (
 							<Input
 								{...field}
-                                label="Password"
+								label="Password"
 								autoComplete="off"
 								type="password"
 								error={errors?.password?.message}
@@ -97,14 +102,14 @@ const Login: React.FC = () => {
 							/>
 						)}
 					/>
-                    <Button type="submit" text="Login" />
-                    <Link href="/register">
-                        <a>Register</a>
-                    </Link>
-                </form>
-            </S.FormContainer>
-        </S.Container>
-    )
-}
+					<Button type="submit" text="Login" />
+					<Link href="/register">
+						<a>Register</a>
+					</Link>
+				</form>
+			</S.FormContainer>
+		</BaseTemplate>
+	);
+};
 
 export default Login;

@@ -1,13 +1,13 @@
-import LoginTemplate from '../templates/Login'
-import Head from 'next/head'
+import Head from 'next/head';
+import LoginTemplate from '../templates/Login';
 
 export default function Login() {
-    return (
-      <>
-        <Head>
-          <title>Login</title>
-        </Head>
-        <LoginTemplate />
-      </>
-    )
-  }
+	return (
+		<>
+			<Head>
+				<title>Login</title>
+			</Head>
+			<LoginTemplate />
+		</>
+	);
+}

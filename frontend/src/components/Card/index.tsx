@@ -15,6 +15,8 @@ type Movie = {
     imdbID: string;
     Type: string;
     Poster: string;
+    bookmarked: boolean;
+    onBookmarked: (movieId: string) => void
 }
 
 const useStyles = makeStyles({
@@ -26,7 +28,7 @@ const useStyles = makeStyles({
     },
   });
 
-const CustomCard: React.FC<Movie> = ({ Poster,Title, Year, Type }) => {
+const CustomCard: React.FC<Movie> = ({ Poster,Title, Year, Type, bookmarked, onBookmarked, imdbID }) => {
     const classes = useStyles();
 
     return (
@@ -49,8 +51,8 @@ const CustomCard: React.FC<Movie> = ({ Poster,Title, Year, Type }) => {
             </Typography>
           </CardContent>
           <CardActions disableSpacing>
-            <IconButton aria-label="add to favorites">
-              <FavoriteIcon />
+            <IconButton aria-label="add to favorites" onClick={() => onBookmarked(imdbID)}>
+              <FavoriteIcon color={bookmarked ? 'secondary' : 'primary'} />
             </IconButton>
           </CardActions>
         </Card>

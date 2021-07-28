@@ -1,11 +1,10 @@
-import * as S from './styles'
-import Link from 'next/link'
-import React, { useState } from 'react'
-import axios from 'axios'
-import CircularProgress from '@material-ui/core/CircularProgress';
-import { useRouter } from 'next/router'
-import { Input, Button } from 'components'
-import { useForm, Controller } from "react-hook-form";
+import React, { useState } from 'react';
+import { useRouter } from 'next/router';
+import { Input, Button, Loading } from 'components';
+import { useForm, Controller } from 'react-hook-form';
+import client from '../../services/client-axios';
+import * as S from './styles';
+import BaseTemplate from '../Base';
 
 type FormValues = {
 	email: string;
@@ -14,92 +13,96 @@ type FormValues = {
 };
 
 const Register: React.FC = () => {
-    const { watch,
+	const {
 		control,
 		handleSubmit,
-		formState: { errors, isSubmitted },
-    } = useForm<FormValues>({
+		formState: { errors },
+	} = useForm<FormValues>({
 		defaultValues: {
 			email: '',
 			password: '',
-            name: '',
+			name: '',
 		},
 	});
-    const values = watch();
-    const router = useRouter()
+	const router = useRouter();
+	const [loading, setLoading] = useState(false);
 
-    const [loading, setLoading] = useState(false)
+	const onSubmit = async (form: FormValues) => {
+		try {
+			setLoading(true);
 
-    const onSubmit = async (form: FormValues) => {
-        try {
-            setLoading(true)
+			await client.post('http://localhost:3001/api/v1/users/register', {
+				email: form.email,
+				password: form.password,
+				name: form.name,
+			});
 
-            const { data } = await axios.post('http://localhost:3001/api/v1/users/register', {
-                email: form.email,
-                password: form.password,
-                name: form.name,
-            })
+			setTimeout(() => {
+				setLoading(false);
+				router.push('/login');
+			}, 1000);
+		} catch (error) {
+			setTimeout(() => setLoading(false), 1000);
+		}
+	};
 
-            router.push('/login')
+	if (loading) {
+		return (
+			<BaseTemplate title="Login">
+				<Loading />
+			</BaseTemplate>
+		);
+	}
 
-        } catch (error) {
-            setLoading(false)
-        }
-    }
+	return (
+		<BaseTemplate title="Register">
+			<S.FormContainer>
+				<h3>Register!</h3>
+				<form onSubmit={handleSubmit(onSubmit)}>
+					<Controller
+						control={control}
+						name="name"
+						rules={{
+							required: {
+								value: true,
+								message: 'Name is required.',
+							},
+						}}
+						render={({ field }) => (
+							<Input
+								{...field}
+								label="Name"
+								autoComplete="off"
+								type="text"
+								error={errors?.name?.message}
+								hasError={!!errors?.name?.message}
+							/>
+						)}
+					/>
 
-    if (loading) {
-        return <CircularProgress />
-    }
+					<Controller
+						control={control}
+						name="email"
+						rules={{
+							required: {
+								value: true,
+								message: 'E-mail is required.',
+							},
+						}}
+						render={({ field }) => (
+							<Input
+								{...field}
+								label="E-mail"
+								autoComplete="off"
+								maxLength={300}
+								type="text"
+								error={errors?.email?.message}
+								hasError={!!errors?.email?.message}
+							/>
+						)}
+					/>
 
-    return (
-        <S.Container>
-            <S.FormContainer>
-                <h3>Register!</h3>
-                <form onSubmit={handleSubmit(onSubmit)}>
-                    <Controller
-                        control={control}
-                        name="name"
-                        rules={{
-                            required: {
-                                value: true,
-                                message: 'Name is required.',
-                            },
-                        }}
-                        render={({ field }) => (
-                            <Input
-                                {...field}
-                                label="Name"
-                                autoComplete="off"
-                                type="text"
-                                error={errors?.name?.message}
-                                hasError={!!errors?.name?.message}
-                            />
-                        )}
-                    />
-
-                    <Controller
-                        control={control}
-                        name="email"
-                        rules={{
-                            required: {
-                                value: true,
-                                message: 'E-mail is required.',
-                            },
-                        }}
-                        render={({ field }) => (
-                            <Input
-                                {...field}
-                                label="E-mail"
-                                autoComplete="off"
-                                maxLength={300}
-                                type="text"
-                                error={errors?.email?.message}
-                                hasError={!!errors?.email?.message}
-                            />
-                        )}
-                    />
-
-                    <Controller
+					<Controller
 						control={control}
 						name="password"
 						rules={{
@@ -111,7 +114,7 @@ const Register: React.FC = () => {
 						render={({ field }) => (
 							<Input
 								{...field}
-                                label="Password"
+								label="Password"
 								autoComplete="off"
 								maxLength={300}
 								type="password"
@@ -120,11 +123,11 @@ const Register: React.FC = () => {
 							/>
 						)}
 					/>
-                    <Button type="submit" text="Register" />
-                </form>
-            </S.FormContainer>
-        </S.Container>
-    )
-}
+					<Button type="submit" text="Register" />
+				</form>
+			</S.FormContainer>
+		</BaseTemplate>
+	);
+};
 
 export default Register;
