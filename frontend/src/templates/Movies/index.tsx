@@ -42,7 +42,7 @@ const Movies: React.FC = () => {
 		setToken(getToken);
 
 		async function getBookmarked() {
-			const { data } = await client.get(`http://localhost:3001/api/v1/movies/bookmarkeds`, {
+			const { data } = await client.get(`/movies/bookmarkeds`, {
 				headers: {
 					Authorization: `Bearer ${getToken}`,
 				},
@@ -59,7 +59,7 @@ const Movies: React.FC = () => {
 	const onSearch = async () => {
 		try {
 			setLoading(true);
-			const { data } = await client.get(`http://localhost:3001/api/v1/movies/search?title=${search}`, {
+			const { data } = await client.get(`/movies/search?title=${search}`, {
 				headers: {
 					Authorization: `Bearer ${token}`,
 				},
@@ -80,7 +80,7 @@ const Movies: React.FC = () => {
 	const handlePagination = async (event: React.ChangeEvent<unknown>, value: number) => {
 		try {
 			setLoading(true);
-			const { data } = await client.get(`http://localhost:3001/api/v1/movies/search?title=${search}&page=${value}`, {
+			const { data } = await client.get(`/movies/search?title=${search}&page=${value}`, {
 				headers: {
 					Authorization: `Bearer ${token}`,
 				},
@@ -104,7 +104,7 @@ const Movies: React.FC = () => {
 		try {
 			setLoading(true);
 			await client.post(
-				`http://localhost:3001/api/v1/movies/bookmarked`,
+				`/movies/bookmarked`,
 				{
 					movieId,
 				},

@@ -1,14 +1,20 @@
 
 FROM node:16-alpine
 
-WORKDIR /usr/app
+RUN mkdir -p /usr/src/app
 
-COPY ./package*.json ./
+WORKDIR /usr/src/app
+
+COPY ./package*.json /usr/src/app/
+
+COPY ./yarn.lock /usr/src/app/
 
 RUN yarn install
 
-COPY . .
+COPY . /usr/src/app
 
 RUN yarn build
 
-EXPOSE 80
+EXPOSE 3001
+
+CMD "yarn" "dev"
