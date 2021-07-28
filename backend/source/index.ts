@@ -5,9 +5,9 @@ import connection from './infra/connection';
 
 listen(server)
 	.then(async () => {
-		logger.info('SERVER STARTED');
 		await connection
-			.then(() => {
+		.then(() => {
+				logger.info('SERVER STARTED');
 				logger.info('Mongo Connected');
 			})
 			.catch(() => {
