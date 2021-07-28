@@ -57,16 +57,16 @@
 ### Overview
 To access the main page you must have a user, for that click on the register link to create a new user
 [![AMVij2.md.png](https://iili.io/AMVij2.md.png)](https://freeimage.host/i/AMVij2)
-
+\
 This screen will ask for some information, fill it in and register and you will be redirected to the login screen.
 [![AMVsQS.md.png](https://iili.io/AMVsQS.md.png)](https://freeimage.host/i/AMVsQS)
-
+\
 This is the search screen, type in the movie name and click the search button
 [![AMVPTl.md.png](https://iili.io/AMVPTl.md.png)](https://freeimage.host/i/AMVPTl)
-
+\
 To favorite a movie click on the heart icon
 [![AMVt4e.md.png](https://iili.io/AMVt4e.md.png)](https://freeimage.host/i/AMVt4e)
-
+\
 To go to other pages you can browse the page's pagination
 [![AMVZG9.md.png](https://iili.io/AMVZG9.md.png)](https://freeimage.host/i/AMVZG9)
 
